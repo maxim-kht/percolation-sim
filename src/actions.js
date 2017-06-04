@@ -1,19 +1,28 @@
-export const SET_SIMULATION_HEIGHT = 'SET_SIMULATION_HEIGHT';
-export const SET_SIMULATION_WIDTH = 'SET_SIMULATION_WIDTH';
+export const SET_HEIGHT = 'SET_HEIGHT';
+export const SET_WIDTH = 'SET_WIDTH';
 export const RUN_SIMULATION = 'RUN_SIMULATION';
-export const OPEN_CELL = 'OPEN_CELL';
+export const OPEN_RANDOM = 'OPEN_RANDOM';
+export const CREATE_GRID = 'CREATE_GRID';
 
-export function setSimulationHeight(height) {
+export function setHeight(height) {
   return {
-    type: SET_SIMULATION_HEIGHT,
+    type: SET_HEIGHT,
     height,
   };
 }
 
-export function setSimulationWidth(width) {
+export function setWidth(width) {
   return {
-    type: SET_SIMULATION_WIDTH,
+    type: SET_WIDTH,
     width,
+  };
+}
+
+export function createGrid(height, width) {
+  return {
+    type: CREATE_GRID,
+    width,
+    height,
   };
 }
 
@@ -23,10 +32,8 @@ export function runSumulation() {
   };
 }
 
-export function openCell(yCoordinate, xCoordinate) {
+export function openRandom() {
   return {
-    type: OPEN_CELL,
-    yCoordinate,
-    xCoordinate,
+    type: OPEN_RANDOM,
   };
 }
