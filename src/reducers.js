@@ -6,6 +6,7 @@ import {
   OPEN_RANDOM,
   CREATE_GRID,
 } from './actions';
+// import { openRandom } from './utils';
 
 const defaultSimulationData = {
   height: 20,
@@ -33,6 +34,21 @@ function grid(state = [], action) {
         }
       }
       return newState;
+    case RUN_SIMULATION:
+      return state.map(elem => {
+        return {...elem, state: 'closed'};
+      });
+    case OPEN_RANDOM:
+      const closedKeys = state.filter(elem => elem.state === 'closed')
+                              .map(elem => elem.key);
+      const randomKey = closedKeys[Math.floor(Math.random() * closedKeys.length)];
+      return state.map(elem => {
+        if (elem.key === randomKey) {
+          return { ...elem, state: 'opened'};
+        } else {
+          return elem;
+        }
+      });
     default:
       return state;    
   }

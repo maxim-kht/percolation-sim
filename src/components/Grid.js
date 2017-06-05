@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import GridElement from './GridElement';
 
 const gridContainerStyle = {
-  maxWidth: '600px',
-  minWidth: '600px',
+  maxWidth: '400px',
+  minWidth: '400px',
 };
 
 class Grid extends Component {
@@ -20,7 +20,12 @@ class Grid extends Component {
             <div className="panel-heading">Simulation</div>
             <div className="panel-body">
               <div className="grid-container" style={gridContainerStyle}>
-                {grid.map(element => <GridElement state={element.state} />)}
+                {grid.map(element => (
+                  <GridElement
+                    key={element.key}
+                    state={element.state}
+                  />
+                ))}
               </div>
             </div>
           </div>

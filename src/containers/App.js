@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { createGrid } from '../actions';
+import { createGrid, runSimulation, openRandom } from '../actions';
 
 import Intro from '../components/Intro';
 import Grid from '../components/Grid';
@@ -13,12 +13,18 @@ class App extends Component {
     dispatch(createGrid(20, 20));
   }
 
+  runSimulation() {
+    const { dispatch } = this.props; 
+    dispatch(runSimulation());
+    setInterval(() => dispatch(openRandom()), 50);
+  }
+
   render() {
     const { grid } = this.props;
 
     return (
       <div className="container">
-        <Intro />
+        <Intro runSimulation={() => this.runSimulation()} />
         <Grid grid={grid} />
       </div>
     );

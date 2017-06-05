@@ -4,21 +4,24 @@ import PropTypes from 'prop-types';
 const stateColorMap = {
   opened: '#FFFFFF',
   closed: '#000000',
-  filled: '#5d90e2'
+  filled: '#9bfaff',
 };
 
-const gridElementStyle = {
-  border: '1px dashed black',
+let gridElementStyle = {
+  // border: '1px solid black',
   float: 'left',
-  width: '30px',
-  height: '30px',
+  width: '20px',
+  height: '20px',
 };
 
 class GridElement extends Component {
 
   render() {
     const { state } = this.props;
-    gridElementStyle.background = stateColorMap[state];
+    gridElementStyle = {
+      ...gridElementStyle,
+      background: stateColorMap[state]
+    };
 
     return (
       <div style={gridElementStyle}></div>

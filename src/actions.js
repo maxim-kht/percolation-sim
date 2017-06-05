@@ -26,7 +26,7 @@ export function createGrid(height, width) {
   };
 }
 
-export function runSumulation() {
+export function runSimulation() {
   return {
     type: RUN_SIMULATION,
   };
