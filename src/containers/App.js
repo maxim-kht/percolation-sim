@@ -15,8 +15,22 @@ class App extends Component {
 
   runSimulation() {
     const { dispatch } = this.props; 
+    const { width, height } = this.props.simulation;
+
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+
     dispatch(runSimulation());
-    setInterval(() => dispatch(openRandom()), 50);
+
+    let count = 0;
+    this.intervalId = setInterval(() => {
+      dispatch(openRandom());
+      count++;
+      if (count > width * height) {
+        clearInterval(this.intervalId);
+      }
+    }, 50);
   }
 
   render() {
@@ -32,9 +46,8 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  const { grid } = state;
-
-  return { grid }
+  const { simulation, grid } = state;
+  return { simulation, grid }
 }
 
 export default connect(mapStateToProps)(App);
