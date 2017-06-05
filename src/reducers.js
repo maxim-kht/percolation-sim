@@ -28,7 +28,7 @@ function grid(state = [], action) {
       let key = 0;
       for (let j = 0; j < action.height; j++) {
         for (let i = 0; i < action.width; i++) {
-          newState.push({ key, i, j, state: open });
+          newState.push({ key, i, j, state: 'filled' });
           key++;
         }
       }
