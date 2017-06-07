@@ -1,11 +1,30 @@
 class UnionFind {
   constructor(grid) {
+    // debugger;
+    // this.ids = grid.map(element => element.unionId);
+    this.grid = grid;
+  }
 
+  root(i) {
+    while (i !== this.grid[i].unionId) {
+      i = this.grid[i].unionId;
+    }
+    return i;
+  }
+
+  union(element1, element2) {
+    let i = this.root(element1.key);
+    let j = this.root(element2.key);
+    this.grid[i].unionId = j;
+  }
+
+  connected(element1, element2) {
+    return this.root(element1.key) === this.root(element2.key);
   }
 }
 
 export function populateNeighbors(grid, height, width) {
-  grid.forEach(element => {
+  grid.filter(element => element.type !== 'virtual').forEach(element => {
     let { i, j } = element;
 
     element.northLimit = (i === 0);
@@ -16,16 +35,16 @@ export function populateNeighbors(grid, height, width) {
     element.neighbors = [];
 
     if (!element.northLimit) {
-      element.neigbors.push(grid.filter(elem => elem.i === i - 1 && elem.j === j)[0]);
+      element.neighbors.push(grid.filter(elem => elem.i === i - 1 && elem.j === j)[0]);
     }
     if (!element.southLimit) {
-      element.neigbors.push(grid.filter(elem => elem.i === i + 1 && elem.j === j)[0]);
+      element.neighbors.push(grid.filter(elem => elem.i === i + 1 && elem.j === j)[0]);
     }
     if (!element.westLimit) {
-      element.neigbors.push(grid.filter(elem => elem.i === i && elem.j === j - 1)[0]);
+      element.neighbors.push(grid.filter(elem => elem.i === i && elem.j === j - 1)[0]);
     }
     if (!element.eastLimit) {
-      element.neigbors.push(grid.filter(elem => elem.i === i && elem.j === j + 1)[0]);
+      element.neighbors.push(grid.filter(elem => elem.i === i && elem.j === j + 1)[0]);
     } 
   });
 
@@ -47,10 +66,10 @@ export function openElement(grid, key) {
   }
 
   element.neighbors
-      .filter(neighbor => neighbor.state === 'opened')
+      .filter(neighbor => neighbor.state !== 'closed')
       .forEach(neighbor => uf.union(element, neighbor));
 
-  return element;
+  return grid;
 }
 
 export function checkPercolation(grid) {
@@ -62,4 +81,5 @@ export function checkPercolation(grid) {
           element.state = 'filled';
         }
       });
+  return grid;
 }

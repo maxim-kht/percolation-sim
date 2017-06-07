@@ -9,13 +9,14 @@ import Grid from '../components/Grid';
 
 class App extends Component {
   componentDidMount() {
-    const { dispatch } = this.props; 
-    dispatch(createGrid(20, 20));
+    const { dispatch } = this.props;
+    const { height, width } = this.props.simulation;
+    dispatch(createGrid(height, width));
   }
 
   runSimulation() {
     const { dispatch } = this.props; 
-    const { width, height } = this.props.simulation;
+    const { height, width } = this.props.simulation;
 
     if (this.intervalId) {
       clearInterval(this.intervalId);
@@ -27,10 +28,10 @@ class App extends Component {
     this.intervalId = setInterval(() => {
       dispatch(openRandom());
       count++;
-      if (count > width * height) {
+      if (count === width * height) {
         clearInterval(this.intervalId);
       }
-    }, 50);
+    }, 100);
   }
 
   render() {

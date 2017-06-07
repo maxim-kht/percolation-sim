@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import GridElement from './GridElement';
 
 const gridContainerStyle = {
-  maxWidth: '400px',
-  minWidth: '400px',
+  maxWidth: '200px',
+  minWidth: '200px',
 };
 
 class Grid extends Component {
@@ -20,11 +20,12 @@ class Grid extends Component {
             <div className="panel-heading">Simulation</div>
             <div className="panel-body">
               <div className="grid-container" style={gridContainerStyle}>
-                {grid.map(element => (
-                  <GridElement
-                    key={element.key}
-                    state={element.state}
-                  />
+                {grid.filter(element => element.type !== 'virtual')
+                     .map(element => (
+                      <GridElement
+                        key={element.key}
+                        state={element.state}
+                      />
                 ))}
               </div>
             </div>
