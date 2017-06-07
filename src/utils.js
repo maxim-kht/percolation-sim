@@ -21,6 +21,34 @@ class UnionFind {
   }
 }
 
+export function createGrid(height, width) {
+  let grid = [];
+  // First element, top virtual emenent
+  grid.push({
+    key: 0,
+    unionId: 0,
+    state: 'filled',
+    type: 'virtual',
+  });
+  // Grid elements
+  let key = 1;
+  for (let i = 0; i < height; i++) {
+    for (let j = 0; j < width; j++) {
+      grid.push({ key, i, j, unionId: key, state: 'filled' });
+      key++;
+    }
+  }
+  // Last element, bottom virtual element
+  grid.push({
+    key: key,
+    unionId: key,
+    state: 'opened',
+    type: 'virtual',
+  });
+
+  return grid;
+}
+
 export function populateNeighbors(grid, height, width) {
   grid.filter(element => element.type !== 'virtual').forEach(element => {
     let { i, j } = element;
@@ -72,7 +100,7 @@ export function openElement(grid, element) {
 export function checkPercolation(grid) {
   const uf = new UnionFind(grid);
 
-  grid.filter(element => element.state !== 'closed')
+  grid.filter(element => element.state === 'opened')
       .forEach(element => {
         if (uf.connected(element, grid[0])) {
           element.state = 'filled';

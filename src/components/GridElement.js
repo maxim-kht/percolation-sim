@@ -10,8 +10,8 @@ const stateColorMap = {
 let gridElementStyle = {
   // border: '1px solid black',
   float: 'left',
-  width: '20px',
-  height: '20px',
+  width: '10px',
+  height: '10px',
 };
 
 class GridElement extends Component {
