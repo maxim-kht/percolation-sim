@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import GridElement from './GridElement';
 
 const gridContainerStyle = {
-  maxWidth: '200px',
-  minWidth: '200px',
+  maxWidth: '400px',
+  minWidth: '400px',
 };
 
 class Grid extends Component {

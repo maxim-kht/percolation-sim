@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const stateColorMap = {
   opened: '#FFFFFF',
   closed: '#000000',
-  filled: '#9bfaff',
+  filled: '#00BFFF',
 };
 
 let gridElementStyle = {

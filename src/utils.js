@@ -1,7 +1,5 @@
 class UnionFind {
   constructor(grid) {
-    // debugger;
-    // this.ids = grid.map(element => element.unionId);
     this.grid = grid;
   }
 
@@ -35,26 +33,25 @@ export function populateNeighbors(grid, height, width) {
     element.neighbors = [];
 
     if (!element.northLimit) {
-      element.neighbors.push(grid.filter(elem => elem.i === i - 1 && elem.j === j)[0]);
+      element.neighbors.push(grid.filter(elem => elem.i === i - 1 && elem.j === j)[0].key);
     }
     if (!element.southLimit) {
-      element.neighbors.push(grid.filter(elem => elem.i === i + 1 && elem.j === j)[0]);
+      element.neighbors.push(grid.filter(elem => elem.i === i + 1 && elem.j === j)[0].key);
     }
     if (!element.westLimit) {
-      element.neighbors.push(grid.filter(elem => elem.i === i && elem.j === j - 1)[0]);
+      element.neighbors.push(grid.filter(elem => elem.i === i && elem.j === j - 1)[0].key);
     }
     if (!element.eastLimit) {
-      element.neighbors.push(grid.filter(elem => elem.i === i && elem.j === j + 1)[0]);
+      element.neighbors.push(grid.filter(elem => elem.i === i && elem.j === j + 1)[0].key);
     } 
   });
 
   return grid;
 }
 
-export function openElement(grid, key) {
+export function openElement(grid, element) {
   const uf = new UnionFind(grid);
 
-  const element = grid.filter(element => element.key === key)[0];
   element.state = 'opened';
 
   if (element.northLimit) {
@@ -65,7 +62,7 @@ export function openElement(grid, key) {
     uf.union(element, grid[grid.length - 1]);
   }
 
-  element.neighbors
+  grid.filter(elem => element.neighbors.includes(elem.key))
       .filter(neighbor => neighbor.state !== 'closed')
       .forEach(neighbor => uf.union(element, neighbor));
 
@@ -75,7 +72,7 @@ export function openElement(grid, key) {
 export function checkPercolation(grid) {
   const uf = new UnionFind(grid);
 
-  grid.filter(element => element.state === 'opened')
+  grid.filter(element => element.state !== 'closed')
       .forEach(element => {
         if (uf.connected(element, grid[0])) {
           element.state = 'filled';

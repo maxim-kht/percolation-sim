@@ -4,8 +4,8 @@ import { RUN_SIMULATION, OPEN_RANDOM, CREATE_GRID } from './actions';
 import { populateNeighbors, openElement, checkPercolation } from './utils';
 
 const defaultSimulationData = {
-  height: 10,
-  width: 10,
+  height: 20,
+  width: 20,
   isRunning: false,
   isComplete: false,
   percolates: undefined,
@@ -32,8 +32,8 @@ function grid(state = [], action) {
       });
       // Grid elements
       let key = 1;
-      for (let j = 0; j < action.height; j++) {
-        for (let i = 0; i < action.width; i++) {
+      for (let i = 0; i < action.height; i++) {
+        for (let j = 0; j < action.width; j++) {
           newState.push({ key, i, j, state: 'filled' });
           key++;
         }
@@ -53,20 +53,17 @@ function grid(state = [], action) {
         if (elem.key === 0) {
           return { ...elem, unionId: elem.key, state: 'filled'};
         } else if (elem.key === state.length - 1) {
-          return { ...elem, unionId: elem.key, state: 'opened'};
+          return { ...elem, unionId: elem.key, state: 'opened' };
         } else {
           return { ...elem, unionId: elem.key, state: 'closed' };
         }
       });
     case OPEN_RANDOM:
-      const closedKeys = state.filter(elem => elem.state === 'closed')
-                              .map(elem => elem.key);
-      const randomKey = closedKeys[Math.floor(Math.random() * closedKeys.length)];
+      const closedElements = state.filter(elem => elem.state === 'closed')
+      const randomElement = closedElements[Math.floor(Math.random() * closedElements.length)];
       newState = [...state];
-      newState = openElement(newState, randomKey);
-      newState = checkPercolation(newState);
-      // console.log(newState.map(el => ( el.state + ' ' + el.key + ' ' + el.unionId)))
-      return newState;
+      newState = openElement(newState, randomElement);
+      return checkPercolation(newState);
     default:
       return state;
   }
