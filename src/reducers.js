@@ -1,11 +1,10 @@
 import { combineReducers } from 'redux';
 
-import { RUN_SIMULATION, OPEN_RANDOM, CREATE_GRID } from './actions';
+import { SET_HEIGHT, SET_WIDTH, RUN_SIMULATION, OPEN_RANDOM, CREATE_GRID } from './actions';
 import { createGrid, populateNeighbors, openElement, checkPercolation } from './utils';
 
 const defaultSimulationData = {
-  height: 40,
-  width: 40,
+  elementSize: 10,
   isRunning: false,
   isComplete: false,
   percolates: undefined,
@@ -14,7 +13,32 @@ const defaultSimulationData = {
 };
 
 function simulation(state = defaultSimulationData, action) {
+  switch (action.type) {
+    case CREATE_GRID:
+      return {
+        ...state,
+        gridWidth: state.elementSize * action.width
+      }
+    default:
+      return state;
+  }
   return state;
+}
+
+const defaultInputData = {
+  height: 40,
+  width: 40,
+};
+
+function inputData(state = defaultInputData, action) {
+  switch (action.type) {
+    case SET_HEIGHT:
+      return { ...state, height: action.height }
+    case SET_WIDTH:
+      return { ...state, width: action.width }
+    default:
+      return state;
+  }
 }
 
 function grid(state = [], action) {
@@ -47,6 +71,7 @@ function grid(state = [], action) {
 }
 
 const rootReducer = combineReducers({
+  inputData,
   simulation,
   grid
 });

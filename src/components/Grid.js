@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 
 import GridElement from './GridElement';
 
-const gridContainerStyle = {
-  maxWidth: '400px',
-  minWidth: '400px',
-};
-
 class Grid extends Component {
 
   render() {
+    const { elementSize, gridWidth } = this.props;
+    const gridContainerStyle = {
+      maxWidth: gridWidth + 'px',
+      minWidth: gridWidth + 'px',
+    };
+
     const { grid } = this.props;
 
     return (
@@ -25,6 +26,7 @@ class Grid extends Component {
                       <GridElement
                         key={element.key}
                         state={element.state}
+                        size={elementSize}
                       />
                 ))}
               </div>
