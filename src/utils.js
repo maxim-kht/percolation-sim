@@ -97,14 +97,21 @@ export function openElement(grid, element) {
   return grid;
 }
 
-export function checkPercolation(grid) {
+export function checkPercolationAndFill(grid) {
   const uf = new UnionFind(grid);
 
   grid.filter(element => element.state === 'opened')
       .forEach(element => {
         if (uf.connected(element, grid[0])) {
           element.state = 'filled';
+          if (element.southLimit) {
+            grid[grid.length - 1].state = 'filled';
+          }
         }
       });
   return grid;
+}
+
+export function gridPercolates(grid) {
+  return grid[grid.length - 1].state === 'filled';
 }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { 
   setHeight, setWidth, createGrid, runSimulation, openRandom,
-  stopSimulation,
+  stopSimulation, addHistoryItem
 } from '../actions';
 
 import Intro from '../components/Intro';
@@ -58,26 +58,35 @@ class App extends Component {
     dispatch(createGrid(height, width));
   }
 
+  addHistoryItem(height, weight, count) {
+    const { dispatch } = this.props;
+    dispatch(addHistoryItem(height, weight, count));
+  }
+
   render() {
     const { grid } = this.props;
     const { height, width, interval } = this.props.inputData;
-    const { elementSize, gridWidth, isRunning } = this.props.simulation;
+    const { elementSize, gridWidth, isRunning, percolationStatSent } = this.props.simulation;
 
     return (
       <div className="container">
         <Intro
           height={height}
           width={width}
-          setHeight={(height) => this.setHeight(height)}
-          setWidth={(width) => this.setWidth(width)}
+          setHeight={height => this.setHeight(height)}
+          setWidth={width => this.setWidth(width)}
           runSimulation={() => this.runSimulation()}
           stopSimulation={() => this.stopSimulation()}
           isRunning={isRunning}
         />
         <Grid
+          height={height}
+          width={width}
           grid={grid}
           elementSize={elementSize}
           gridWidth={gridWidth}
+          addHistoryItem={(height, weight, count) => this.addHistoryItem(height, weight, count)}
+          percolationStatSent={percolationStatSent}
         />
       </div>
     );

@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { gridPercolates } from '../utils';
+
 import GridElement from './GridElement';
 
 class Grid extends Component {
+
+  componentDidUpdate() {
+    const { height, width, grid, addHistoryItem, percolationStatSent } = this.props;
+    const openState = grid.filter(element => element.state !== 'closed' && element.type !== 'virtual').length === height * width;
+
+    if (!openState && !percolationStatSent && grid.length && gridPercolates(grid)) {
+      const openElementsCount = grid.filter(element => element.state !== 'closed' && element.type !== 'virtual' ).length;
+      addHistoryItem(height, width, openElementsCount);
+    }
+  }
 
   render() {
     const { elementSize, gridWidth } = this.props;
@@ -11,7 +23,6 @@ class Grid extends Component {
       maxWidth: gridWidth + 'px',
       minWidth: gridWidth + 'px',
     };
-
     const { grid } = this.props;
 
     return (

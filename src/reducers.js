@@ -2,16 +2,16 @@ import { combineReducers } from 'redux';
 
 import { 
   SET_HEIGHT, SET_WIDTH, RUN_SIMULATION, OPEN_RANDOM,
-  CREATE_GRID, STOP_SIMULATION
+  CREATE_GRID, STOP_SIMULATION, ADD_HISTORY_ITEM
 } from './actions';
-import { createGrid, populateNeighbors, openElement, checkPercolation } from './utils';
+import { createGrid, populateNeighbors, openElement, checkPercolationAndFill } from './utils';
 
 const defaultSimulationData = {
   elementSize: 10,
   isRunning: false,
-  isComplete: false,
   percolates: undefined,
   percolatesOnSite: undefined,
+  percolationStatSent: false,
 };
 
 function simulation(state = defaultSimulationData, action) {
@@ -21,7 +21,9 @@ function simulation(state = defaultSimulationData, action) {
     case RUN_SIMULATION:
       return { ...state, isRunning: true };
     case STOP_SIMULATION:
-      return { ...state, isRunning: false };
+      return { ...state, isRunning: false, percolationStatSent: false };
+    case ADD_HISTORY_ITEM:
+      return { ...state, percolationStatSent: true };
     default:
       return state;
   }
@@ -67,7 +69,7 @@ function grid(state = [], action) {
       let randomElement = closedElements[Math.floor(Math.random() * closedElements.length)];
       newState = [...state];
       newState = openElement(newState, randomElement);
-      return checkPercolation(newState);
+      return checkPercolationAndFill(newState);
     default:
       return state;
   }
