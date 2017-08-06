@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { 
-  setHeight, setWidth, createGrid, runSimulation, openRandom 
+  setHeight, setWidth, createGrid, runSimulation, openRandom,
+  stopSimulation,
 } from '../actions';
 
 import Intro from '../components/Intro';
@@ -43,14 +44,24 @@ class App extends Component {
       count++;
       if (count === width * height) {
         clearInterval(this.intervalId);
+        dispatch(stopSimulation());
       }
     }, 50);
+  }
+
+  stopSimulation() {
+    const { dispatch } = this.props;
+    const { height, width } = this.props.inputData;
+
+    clearInterval(this.intervalId);
+    dispatch(stopSimulation());
+    dispatch(createGrid(height, width));
   }
 
   render() {
     const { grid } = this.props;
     const { height, width, interval } = this.props.inputData;
-    const { elementSize, gridWidth } = this.props.simulation;
+    const { elementSize, gridWidth, isRunning } = this.props.simulation;
 
     return (
       <div className="container">
@@ -60,8 +71,14 @@ class App extends Component {
           setHeight={(height) => this.setHeight(height)}
           setWidth={(width) => this.setWidth(width)}
           runSimulation={() => this.runSimulation()}
+          stopSimulation={() => this.stopSimulation()}
+          isRunning={isRunning}
         />
-        <Grid grid={grid} elementSize={elementSize} gridWidth={gridWidth} />
+        <Grid
+          grid={grid}
+          elementSize={elementSize}
+          gridWidth={gridWidth}
+        />
       </div>
     );
   }

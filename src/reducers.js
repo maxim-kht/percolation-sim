@@ -1,6 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { SET_HEIGHT, SET_WIDTH, RUN_SIMULATION, OPEN_RANDOM, CREATE_GRID } from './actions';
+import { 
+  SET_HEIGHT, SET_WIDTH, RUN_SIMULATION, OPEN_RANDOM,
+  CREATE_GRID, STOP_SIMULATION
+} from './actions';
 import { createGrid, populateNeighbors, openElement, checkPercolation } from './utils';
 
 const defaultSimulationData = {
@@ -9,16 +12,16 @@ const defaultSimulationData = {
   isComplete: false,
   percolates: undefined,
   percolatesOnSite: undefined,
-  openElements: 400,
 };
 
 function simulation(state = defaultSimulationData, action) {
   switch (action.type) {
     case CREATE_GRID:
-      return {
-        ...state,
-        gridWidth: state.elementSize * action.width
-      }
+      return { ...state, gridWidth: state.elementSize * action.width };
+    case RUN_SIMULATION:
+      return { ...state, isRunning: true };
+    case STOP_SIMULATION:
+      return { ...state, isRunning: false };
     default:
       return state;
   }
@@ -26,16 +29,16 @@ function simulation(state = defaultSimulationData, action) {
 }
 
 const defaultInputData = {
-  height: 40,
-  width: 40,
+  height: 30,
+  width: 30,
 };
 
 function inputData(state = defaultInputData, action) {
   switch (action.type) {
     case SET_HEIGHT:
-      return { ...state, height: action.height }
+      return { ...state, height: action.height };
     case SET_WIDTH:
-      return { ...state, width: action.width }
+      return { ...state, width: action.width };
     default:
       return state;
   }

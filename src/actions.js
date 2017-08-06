@@ -3,6 +3,7 @@ export const SET_WIDTH = 'SET_WIDTH';
 export const RUN_SIMULATION = 'RUN_SIMULATION';
 export const OPEN_RANDOM = 'OPEN_RANDOM';
 export const CREATE_GRID = 'CREATE_GRID';
+export const STOP_SIMULATION = 'STOP_SIMULATION';
 
 export function setHeight(height) {
   return {
@@ -35,5 +36,11 @@ export function runSimulation() {
 export function openRandom() {
   return {
     type: OPEN_RANDOM,
+  };
+}
+
+export function stopSimulation() {
+  return {
+    type: STOP_SIMULATION,
   };
 }
