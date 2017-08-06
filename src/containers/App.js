@@ -87,6 +87,7 @@ class App extends Component {
           gridWidth={gridWidth}
           addHistoryItem={(height, weight, count) => this.addHistoryItem(height, weight, count)}
           percolationStatSent={percolationStatSent}
+          isRunning={isRunning}
         />
       </div>
     );

@@ -8,10 +8,9 @@ import GridElement from './GridElement';
 class Grid extends Component {
 
   componentDidUpdate() {
-    const { height, width, grid, addHistoryItem, percolationStatSent } = this.props;
-    const openState = grid.filter(element => element.state !== 'closed' && element.type !== 'virtual').length === height * width;
+    const { height, width, grid, addHistoryItem, percolationStatSent, isRunning } = this.props;
 
-    if (!openState && !percolationStatSent && grid.length && gridPercolates(grid)) {
+    if (isRunning && !percolationStatSent && grid.length && gridPercolates(grid)) {
       const openElementsCount = grid.filter(element => element.state !== 'closed' && element.type !== 'virtual' ).length;
       addHistoryItem(height, width, openElementsCount);
     }
