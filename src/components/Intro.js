@@ -23,10 +23,8 @@ class Intro extends Component {
         <div className="col-md-12">
           <div className="bs-component">
             <div className="jumbotron">
-              <h1>Привет &#128522;</h1>
-
-              <p>Здесь находится вступительный текст.</p>
-              <p>А здесь есть еще больше текста!</p>
+              <p>Percolation visualization, based on <a href="http://coursera.cs.princeton.edu/algs4/assignments/percolation.html">assignment</a> from Coursera <a href="https://www.coursera.org/learn/algorithms-part1">Algorithms, Part I</a> course, implemented using React/Redux</p>
+              <p><a href="https://github.com/maxim-kht/percolation-sim">Source code</a></p>
               <form className="form-horizontal">
                 <fieldset>
                   <div className="form-group">

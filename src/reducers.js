@@ -75,10 +75,28 @@ function grid(state = [], action) {
   }
 }
 
+function history(state = [], action) {
+  switch (action.type) {
+    case ADD_HISTORY_ITEM:
+      return [
+        ...state,
+        {
+          key: state.length + 1,
+          height: action.height,
+          width: action.width,
+          count: action.count 
+        }
+      ];
+    default:
+      return state;    
+  }
+}
+
 const rootReducer = combineReducers({
   inputData,
   simulation,
-  grid
+  grid,
+  history,
 });
 
 export default rootReducer;

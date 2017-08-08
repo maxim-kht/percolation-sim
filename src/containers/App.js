@@ -9,6 +9,7 @@ import {
 
 import Intro from '../components/Intro';
 import Grid from '../components/Grid';
+import History from '../components/History';
 
 class App extends Component {
   componentDidMount() {
@@ -64,7 +65,7 @@ class App extends Component {
   }
 
   render() {
-    const { grid } = this.props;
+    const { grid, history } = this.props;
     const { height, width, interval } = this.props.inputData;
     const { elementSize, gridWidth, isRunning, percolationStatSent } = this.props.simulation;
 
@@ -79,24 +80,29 @@ class App extends Component {
           stopSimulation={() => this.stopSimulation()}
           isRunning={isRunning}
         />
-        <Grid
-          height={height}
-          width={width}
-          grid={grid}
-          elementSize={elementSize}
-          gridWidth={gridWidth}
-          addHistoryItem={(height, weight, count) => this.addHistoryItem(height, weight, count)}
-          percolationStatSent={percolationStatSent}
-          isRunning={isRunning}
-        />
+        <div className="row">
+          <Grid
+            height={height}
+            width={width}
+            grid={grid}
+            elementSize={elementSize}
+            gridWidth={gridWidth}
+            addHistoryItem={(height, weight, count) => this.addHistoryItem(height, weight, count)}
+            percolationStatSent={percolationStatSent}
+            isRunning={isRunning}
+          />
+          <History
+            history={history}
+          />
+        </div>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const { inputData, simulation, grid } = state;
-  return { inputData, simulation, grid }
+  const { inputData, simulation, grid, history } = state;
+  return { inputData, simulation, grid, history }
 }
 
 export default connect(mapStateToProps)(App);

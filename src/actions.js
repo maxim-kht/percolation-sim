@@ -46,12 +46,11 @@ export function stopSimulation() {
   };
 }
 
-export function addHistoryItem(height, width, elementCount) {
-  console.log('History Item!', height, width, elementCount);
+export function addHistoryItem(height, width, count) {
   return {
     type: ADD_HISTORY_ITEM,
     height,
     width,
-    elementCount,
+    count,
   };
 }
