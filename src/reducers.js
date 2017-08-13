@@ -9,8 +9,6 @@ import { createGrid, populateNeighbors, openElement, checkPercolationAndFill } f
 const defaultSimulationData = {
   elementSize: 10,
   isRunning: false,
-  percolates: undefined,
-  percolatesOnSite: undefined,
   percolationStatSent: false,
 };
 

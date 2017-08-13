@@ -30,7 +30,7 @@ class App extends Component {
 
   runSimulation() {
     const { dispatch } = this.props; 
-    const { height, width, interval } = this.props.inputData;
+    const { height, width } = this.props.inputData;
 
     if (this.intervalId) {
       clearInterval(this.intervalId);
@@ -104,5 +104,13 @@ function mapStateToProps(state) {
   const { inputData, simulation, grid, history } = state;
   return { inputData, simulation, grid, history }
 }
+
+App.propTypes = {
+  dispatch: PropTypes.func,
+  inputData: PropTypes.object,
+  simulation: PropTypes.object,
+  grid: PropTypes.array,
+  history: PropTypes.array,
+};
 
 export default connect(mapStateToProps)(App);

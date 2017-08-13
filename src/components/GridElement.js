@@ -28,4 +28,8 @@ class GridElement extends Component {
   }
 }
 
+GridElement.propTypes = {
+  state: PropTypes.string
+};
+
 export default GridElement;

@@ -17,12 +17,11 @@ class Grid extends Component {
   }
 
   render() {
-    const { elementSize, gridWidth } = this.props;
+    const { grid, elementSize, gridWidth } = this.props;
     const gridContainerStyle = {
       maxWidth: gridWidth + 'px',
       minWidth: gridWidth + 'px',
     };
-    const { grid } = this.props;
 
     return (
       <div className="col-md-7">
@@ -45,5 +44,14 @@ class Grid extends Component {
     );
   }
 }
+
+Grid.propTypes = {
+  grid: PropTypes.array,
+  elementSize: PropTypes.number,
+  gridWidth: PropTypes.number,
+  addHistoryItem: PropTypes.func,
+  percolationStatSent: PropTypes.bool,
+  isRunning: PropTypes.bool,
+};
 
 export default Grid;
